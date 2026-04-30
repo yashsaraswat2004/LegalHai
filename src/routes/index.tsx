@@ -353,7 +353,7 @@ function Index() {
           </Reveal>
           <Reveal delay={240}>
             <p className="mt-8 text-lg md:text-xl max-w-xl mx-auto opacity-80 text-pretty">
-              The first 1,000 names on the waitlist get lifetime free contracts and a personal launch call from our founders.
+              The first 10 names on the waitlist get lifetime free contracts and a personal launch call from our founder.
             </p>
           </Reveal>
           <Reveal delay={360}>
@@ -372,7 +372,9 @@ function Index() {
       <footer className="border-t border-border py-10">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
           <div className="flex items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded bg-signal text-ink font-display font-black">ल</span>
+            <span className="inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded bg-signal">
+              <img src="/logo.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
+            </span>
             LegalHai · Made with ❤ in Bharat
           </div>
           <div className="flex items-center gap-4">

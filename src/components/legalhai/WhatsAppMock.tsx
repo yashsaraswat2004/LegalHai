@@ -55,7 +55,9 @@ export function WhatsAppMock() {
         <div className="rounded-[34px] overflow-hidden bg-[oklch(0.16_0.02_140)] h-[600px] flex flex-col">
           {/* WA header */}
           <div className="bg-emerald/90 text-ink px-4 pt-9 pb-3 flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-ink/20 flex items-center justify-center font-display font-bold">ल</div>
+            <div className="h-9 w-9 overflow-hidden rounded-full bg-ink/20 flex items-center justify-center">
+              <img src="/logo.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
+            </div>
             <div className="leading-tight">
               <div className="font-medium text-sm">LegalHai</div>
               <div className="text-[11px] opacity-70">online · typing legal magic</div>

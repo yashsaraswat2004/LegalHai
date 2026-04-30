@@ -3,8 +3,8 @@ export function Nav({ onJoin }: { onJoin: () => void }) {
     <header className="fixed top-0 inset-x-0 z-50">
       <div className="mx-auto max-w-7xl px-6 lg:px-10 py-5 flex items-center justify-between">
         <a href="#top" className="flex items-center gap-2 group">
-          <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-md bg-signal text-primary-foreground font-display font-black text-lg">
-            ल
+          <span className="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-md">
+            <img src="/logo.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
             <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald animate-pulse" />
           </span>
           <span className="font-display text-xl tracking-tight">
