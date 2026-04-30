@@ -71,6 +71,8 @@ function Index() {
 
   return (
     <div id="top" className="relative min-h-screen bg-background text-foreground grain">
+      <Nav onJoin={() => setOpen(true)} />
+
       {/* ADVANCED SEO: FAQ & SERVICE SCHEMA */}
       <script
         type="application/ld+json"
@@ -110,7 +112,7 @@ function Index() {
       <Nav onJoin={() => setOpen(true)} />
 
       {/* HERO */}
-      <section className="relative pt-32 pb-20 lg:pt-36 lg:pb-28 overflow-hidden">
+      <section className="relative pt-24 pb-20 lg:pt-28 lg:pb-28 overflow-hidden">
         {/* Ambient blobs */}
         <div className="pointer-events-none absolute -top-32 -left-32 h-[460px] w-[460px] rounded-full bg-emerald/15 blur-[120px]" />
         <div className="pointer-events-none absolute top-40 right-0 h-[420px] w-[420px] rounded-full bg-signal/10 blur-[140px]" />
@@ -132,7 +134,7 @@ function Index() {
             <span className="hidden sm:inline">— India's first WhatsApp-native legal stack</span>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-start lg:pt-10">
             {/* LEFT — copy */}
             <div className="lg:col-span-7">
               <h1 className="font-display font-light leading-[0.95] tracking-[-0.03em] text-[clamp(2.75rem,6.4vw,6.5rem)] text-balance">
@@ -192,7 +194,7 @@ function Index() {
             </div>
 
             {/* RIGHT — phone */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <div className="lg:col-span-5 flex justify-center lg:justify-end lg:-mt-22">
               <WhatsAppMock />
             </div>
           </div>

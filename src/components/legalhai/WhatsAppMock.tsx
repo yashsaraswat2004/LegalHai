@@ -110,17 +110,17 @@ export function WhatsAppMock() {
       </div>
 
       {/* Floating tags */}
-      <div className="absolute -left-12 top-20 hidden md:block float-slow">
+      <div className="absolute -left-20 lg:-left-24 top-20 hidden md:block float-slow">
         <div className="rounded-full bg-card border border-border px-3 py-1.5 text-xs font-mono">
           ⏱ avg 1m 52s
         </div>
       </div>
-      <div className="absolute -right-10 top-1/2 hidden md:block float-slow [animation-delay:2s]">
+      <div className="absolute -right-20 lg:-right-24 top-1/2 hidden md:block float-slow [animation-delay:2s]">
         <div className="rounded-full bg-signal text-ink px-3 py-1.5 text-xs font-medium">
           e-Stamp ✓
         </div>
       </div>
-      <div className="absolute -right-8 bottom-24 hidden md:block float-slow [animation-delay:4s]">
+      <div className="absolute -right-16 lg:-right-20 bottom-24 hidden md:block float-slow [animation-delay:4s]">
         <div className="rounded-full bg-card border border-border px-3 py-1.5 text-xs">
           12 भाषाएँ
         </div>
