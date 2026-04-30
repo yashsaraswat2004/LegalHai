@@ -74,32 +74,45 @@ function Index() {
       <Nav onJoin={() => setOpen(true)} />
 
       {/* HERO */}
-      <section className="relative pt-36 pb-24 lg:pt-44 lg:pb-32 overflow-hidden">
+      <section className="relative pt-32 pb-20 lg:pt-36 lg:pb-28 overflow-hidden">
         {/* Ambient blobs */}
-        <div className="pointer-events-none absolute -top-32 -left-32 h-[460px] w-[460px] rounded-full bg-emerald/20 blur-[120px]" />
-        <div className="pointer-events-none absolute top-40 right-0 h-[380px] w-[380px] rounded-full bg-signal/15 blur-[140px]" />
+        <div className="pointer-events-none absolute -top-32 -left-32 h-[460px] w-[460px] rounded-full bg-emerald/15 blur-[120px]" />
+        <div className="pointer-events-none absolute top-40 right-0 h-[420px] w-[420px] rounded-full bg-signal/10 blur-[140px]" />
+        {/* faint grid */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "linear-gradient(var(--paper) 1px, transparent 1px), linear-gradient(90deg, var(--paper) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+            maskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+          }}
+        />
 
         <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground mb-8">
+          <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground mb-10">
             <span className="h-2 w-2 rounded-full bg-emerald animate-pulse" />
             <span>VOL.01 / EARLY ACCESS / {time}</span>
             <span className="hidden sm:inline">— India's first WhatsApp-native legal stack</span>
           </div>
 
-          <h1 className="font-display font-light leading-[0.92] tracking-[-0.03em] text-[clamp(3rem,9vw,9rem)] text-balance">
-            Your lawyer
-            <br />
-            <span className="italic">now lives</span> on
-            <br />
-            <span className="relative inline-block">
-              <span className="underline-snake">WhatsApp.</span>
-              <span className="absolute -right-6 top-2 text-signal text-2xl md:text-4xl not-italic font-sans">✦</span>
-            </span>
-          </h1>
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            {/* LEFT — copy */}
+            <div className="lg:col-span-7">
+              <h1 className="font-display font-light leading-[0.95] tracking-[-0.03em] text-[clamp(2.75rem,6.4vw,6.5rem)] text-balance">
+                Your lawyer
+                <br />
+                <span className="italic">now lives</span> on
+                <br />
+                <span className="ink-underline relative whitespace-nowrap">
+                  WhatsApp.
+                  <svg viewBox="0 0 600 24" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M4 14 C 120 4, 240 22, 360 10 S 560 6, 596 14" />
+                  </svg>
+                </span>
+              </h1>
 
-          <div className="mt-12 grid lg:grid-cols-12 gap-10 items-end">
-            <div className="lg:col-span-7 max-w-2xl">
-              <p className="text-lg md:text-xl text-muted-foreground text-pretty leading-relaxed">
+              <p className="mt-8 text-base md:text-lg text-muted-foreground text-pretty leading-relaxed max-w-xl">
                 LegalHai turns the world's most-used chat app into India's
                 fastest legal desk. Create, sign and store contracts —
                 <span className="text-foreground"> in your language, in two minutes.</span>
@@ -140,7 +153,8 @@ function Index() {
               </div>
             </div>
 
-            <div className="lg:col-span-5">
+            {/* RIGHT — phone */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
               <WhatsAppMock />
             </div>
           </div>
