@@ -3,7 +3,7 @@
   "name": "legalhai",
   "compatibility_date": "2024-11-01",
   "compatibility_flags": ["nodejs_compat"],
-  "main": ".output/server/index.mjs",
+  "main": "@tanstack/react-start/server-entry",
   "assets": {
     "directory": ".output/public",
     "binding": "ASSETS"
