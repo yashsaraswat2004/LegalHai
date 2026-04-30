@@ -71,6 +71,42 @@ function Index() {
 
   return (
     <div id="top" className="relative min-h-screen bg-background text-foreground grain">
+      {/* ADVANCED SEO: FAQ & SERVICE SCHEMA */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is a WhatsApp-signed contract actually legal in India?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Aadhaar e-Sign is recognised under the IT Act, 2000 and Indian Evidence Act. Every LegalHai contract carries a tamper-proof audit trail and stamp duty paid for the relevant state."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which contracts can I create on LegalHai?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can create Rental agreements, NDAs, Freelance contracts, Vendor MoUs, and Employment letters. All templates are vetted by practicing Indian advocates."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What are the charges for using LegalHai?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Joining the waitlist is free. We offer pay-per-contract pricing with no hidden subscriptions or surprise lawyer bills."
+                }
+              }
+            ]
+          })
+        }}
+      />
       <Nav onJoin={() => setOpen(true)} />
 
       {/* HERO */}
@@ -106,6 +142,7 @@ function Index() {
                 <br />
                 <span className="ink-underline relative whitespace-nowrap">
                   WhatsApp.
+                  <span className="sr-only">— India's fastest platform for online legal agreements and Aadhaar e-sign.</span>
                   <svg viewBox="0 0 600 24" preserveAspectRatio="none" aria-hidden="true">
                     <path d="M4 14 C 120 4, 240 22, 360 10 S 560 6, 596 14" />
                   </svg>
@@ -126,13 +163,14 @@ function Index() {
                   Join the waitlist
                   <span className="inline-flex items-center justify-center h-7 w-7 rounded-full bg-ink text-signal group-hover:translate-x-1 transition-transform">→</span>
                 </button>
-                <a
-                  href="#story"
-                  className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-2"
-                >
-                  <span className="h-px w-8 bg-paper/30" />
-                  Scroll the story
-                </a>
+                  <a
+                    href="#story"
+                    aria-label="Read our story about legal transparency in India"
+                    className="text-sm text-muted-foreground hover:text-foreground transition flex items-center gap-2"
+                  >
+                    <span className="h-px w-8 bg-paper/30" />
+                    Scroll the story
+                  </a>
               </div>
 
               <div className="mt-10 flex items-center gap-6 text-xs font-mono text-muted-foreground">

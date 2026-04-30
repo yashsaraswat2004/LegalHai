@@ -13,10 +13,10 @@ export function Nav({ onJoin }: { onJoin: () => void }) {
         </a>
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-          <a href="#story" className="hover:text-foreground transition">The story</a>
-          <a href="#how" className="hover:text-foreground transition">How it works</a>
-          <a href="#why" className="hover:text-foreground transition">Why WhatsApp</a>
-          <a href="#faq" className="hover:text-foreground transition">FAQ</a>
+          <a href="#story" aria-label="Learn about the problem LegalHai solves" className="hover:text-foreground transition">The story</a>
+          <a href="#how" aria-label="Learn how to create contracts on WhatsApp" className="hover:text-foreground transition">How it works</a>
+          <a href="#why" aria-label="Discover the benefits of using WhatsApp for legal tech" className="hover:text-foreground transition">Why WhatsApp</a>
+          <a href="#faq" aria-label="Frequently asked questions about legal validity and pricing" className="hover:text-foreground transition">FAQ</a>
         </nav>
 
         <button
