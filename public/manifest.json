@@ -1,0 +1,22 @@
+{
+  "name": "LegalHai — India's First WhatsApp-Native Legal Platform",
+  "short_name": "LegalHai",
+  "description": "Create, sign and store legal contracts on WhatsApp in 2 minutes.",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#141414",
+  "theme_color": "#e8ff33"
+}

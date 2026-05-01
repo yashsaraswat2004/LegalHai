@@ -16,7 +16,7 @@ export function Nav({ onJoin }: { onJoin: () => void }) {
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-4 flex items-center justify-between">
           <a href="#top" className="flex items-center gap-2 group">
             <span className="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-md">
-              <img src="/logo.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
+              <img src="/favicon.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
               <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald animate-pulse" />
             </span>
             <span className="font-display text-xl tracking-tight">
@@ -29,6 +29,7 @@ export function Nav({ onJoin }: { onJoin: () => void }) {
             <a href="#how" aria-label="Learn how to create contracts on WhatsApp" className="hover:text-foreground transition">How it works</a>
             <a href="#why" aria-label="Discover the benefits of using WhatsApp for legal tech" className="hover:text-foreground transition">Why WhatsApp</a>
             <a href="#faq" aria-label="Frequently asked questions about legal validity and pricing" className="hover:text-foreground transition">FAQ</a>
+            <a href="mailto:saraswatyash2004@gmail.com" className="text-signal hover:brightness-110 transition font-medium">Contact</a>
           </nav>
 
           <button

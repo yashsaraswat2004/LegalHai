@@ -396,6 +396,11 @@ function Index() {
               The first 10 names on the waitlist get lifetime free contracts and a personal launch call from our founder.
             </p>
           </Reveal>
+          <Reveal delay={300}>
+            <p className="mt-2 text-xs font-mono opacity-50 uppercase tracking-widest">
+              Questions? <a href="mailto:hello@legalhai.in" className="underline underline-offset-4 hover:text-ink transition">hello@legalhai.in</a>
+            </p>
+          </Reveal>
           <Reveal delay={360}>
             <button
               onClick={() => setOpen(true)}
@@ -413,9 +418,11 @@ function Index() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
           <div className="flex items-center gap-2">
             <span className="inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded bg-signal">
-              <img src="/logo.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
+              <img src="/favicon.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
             </span>
             LegalHai · Made with ❤ in Bharat
+            <span className="mx-2 opacity-30">|</span>
+            <a href="mailto:hello@legalhai.in" className="hover:text-signal transition">hello@legalhai.in</a>
           </div>
           <div className="flex items-center gap-4">
             <span>© {new Date().getFullYear()}</span>
