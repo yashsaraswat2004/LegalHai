@@ -56,7 +56,7 @@ export function WhatsAppMock() {
           {/* WA header */}
           <div className="bg-emerald/90 text-ink px-4 pt-9 pb-3 flex items-center gap-3">
             <div className="h-9 w-9 overflow-hidden rounded-full bg-ink/20 flex items-center justify-center">
-              <img src="/logo.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
+              <img src="/favicon.png" alt="LegalHai Logo" className="h-full w-full object-cover" />
             </div>
             <div className="leading-tight">
               <div className="font-medium text-sm">LegalHai</div>
@@ -79,11 +79,10 @@ export function WhatsAppMock() {
                 className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[80%] px-3 py-2 text-[13px] leading-snug ${
-                    m.from === "user"
-                      ? "bubble-out bg-signal text-ink"
-                      : "bubble-in bg-paper/10 text-paper"
-                  }`}
+                  className={`max-w-[80%] px-3 py-2 text-[13px] leading-snug ${m.from === "user"
+                    ? "bubble-out bg-signal text-ink"
+                    : "bubble-in bg-paper/10 text-paper"
+                    }`}
                   style={{ animation: "float 0.4s ease-out" }}
                 >
                   {m.text}
@@ -110,7 +109,7 @@ export function WhatsAppMock() {
       </div>
 
       {/* Floating tags */}
-      <div className="absolute -left-20 lg:-left-24 top-20 hidden md:block float-slow">
+      <div className="absolute -left-32 lg:-left-4 top-20 hidden md:block float-slow">
         <div className="rounded-full bg-card border border-border px-3 py-1.5 text-xs font-mono">
           ⏱ avg 1m 52s
         </div>
