@@ -43,8 +43,8 @@ export function WaitlistDialog({
       setError("Enter a valid email");
       return;
     }
-    if (!/^[+\d][\d\s-]{7,}$/.test(phone)) {
-      setError("Enter a valid WhatsApp number");
+    if (phone && !/^[+\d][\d\s-]{7,}$/.test(phone)) {
+      setError("Enter a valid phone number");
       return;
     }
 
@@ -55,7 +55,7 @@ export function WaitlistDialog({
         {
           full_name: name,
           email,
-          phone,
+          phone: phone || "—",
           role,
           created_at: new Date().toISOString(),
         },
@@ -103,9 +103,9 @@ export function WaitlistDialog({
             <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-signal text-ink flex items-center justify-center text-3xl shadow-glow">
               ✓
             </div>
-            <h3 className="font-display text-3xl mb-2">You're on the list.</h3>
+            <h3 className="font-display text-3xl mb-2">You&apos;re on the list.</h3>
             <p className="text-sm text-muted-foreground">
-              We'll WhatsApp you the moment LegalHai opens its doors. Until then, tell a friend who hates paperwork.
+              We&apos;ll reach out when LegalHai opens early access. Tell a friend who signs without reading.
             </p>
           </div>
         ) : (
@@ -114,10 +114,10 @@ export function WaitlistDialog({
               Priority Access
             </div>
             <h3 className="font-display text-3xl mb-2 text-balance leading-tight">
-              Be first to skip the <span className="text-signal italic">lawyer queue.</span>
+              Join <span className="text-signal italic">early access.</span>
             </h3>
             <p className="text-sm text-muted-foreground mb-8">
-              No spam. One message when we launch in your city.
+              Help us build the legal understanding platform India deserves. No spam.
             </p>
 
             <form onSubmit={submit} className="space-y-4">
@@ -148,14 +148,13 @@ export function WaitlistDialog({
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-wider text-muted-foreground ml-1">WhatsApp Number</label>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground ml-1">Phone (optional)</label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91 WhatsApp number"
+                  placeholder="+91 mobile number"
                   className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-signal focus:ring-1 focus:ring-signal/30 transition-all placeholder:text-muted-foreground/50"
-                  required
                   disabled={loading}
                 />
               </div>
@@ -206,8 +205,7 @@ export function WaitlistDialog({
               </button>
               
               <p className="text-[10px] text-muted-foreground text-center pt-2 leading-relaxed">
-                By joining you agree to occasional WhatsApp updates. <br/>
-                We respect your privacy. No marketing spam.
+                Occasional product updates only. We respect your privacy.
               </p>
             </form>
           </>

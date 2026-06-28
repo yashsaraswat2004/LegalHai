@@ -233,4 +233,105 @@
     position: relative;
     border-radius: 14px 14px 4px 14px;
   }
+
+  /* Clerk auth — force readable text on dark LegalHai theme */
+  .clerk-auth-root .cl-card,
+  .clerk-auth-root .cl-main {
+    background-color: #242420 !important;
+  }
+  .clerk-auth-root .cl-formFieldLabel,
+  .clerk-auth-root .cl-formFieldLabelRow label,
+  .clerk-auth-root .cl-headerTitle,
+  .clerk-auth-root .cl-headerSubtitle,
+  .clerk-auth-root .cl-footerActionText,
+  .clerk-auth-root .cl-dividerText,
+  .clerk-auth-root .cl-socialButtonsBlockButtonText,
+  .clerk-auth-root .cl-alternativeMethodsBlockButton {
+    color: #f4f2ea !important;
+  }
+  .clerk-auth-root .cl-headerSubtitle,
+  .clerk-auth-root .cl-footerActionText,
+  .clerk-auth-root .cl-dividerText {
+    color: #b5b2a8 !important;
+  }
+  .clerk-auth-root .cl-formFieldInput {
+    background-color: #141412 !important;
+    color: #f4f2ea !important;
+    border-color: rgba(244, 242, 234, 0.12) !important;
+  }
+  .clerk-auth-root .cl-formFieldInput::placeholder {
+    color: rgba(181, 178, 168, 0.55) !important;
+  }
+  .clerk-auth-root .cl-formButtonPrimary {
+    background-color: #e8ff33 !important;
+    color: #1a1a17 !important;
+  }
+  .clerk-auth-root .cl-footerActionLink,
+  .clerk-auth-root .cl-formFieldAction,
+  .clerk-auth-root .cl-formResendCodeLink {
+    color: #e8ff33 !important;
+  }
+  .clerk-auth-root .cl-socialButtonsBlockButton {
+    background-color: #141412 !important;
+    border-color: rgba(244, 242, 234, 0.12) !important;
+  }
+
+  /* Clerk UserButton popover + account modal — dark LegalHai theme */
+  .cl-userButtonPopoverCard,
+  .cl-userButtonPopoverMain,
+  .cl-userButtonPopoverActions {
+    background-color: #242420 !important;
+    border-color: rgba(244, 242, 234, 0.12) !important;
+  }
+
+  .cl-userPreview,
+  .cl-userPreview__userButton {
+    background-color: #242420 !important;
+    border-color: rgba(244, 242, 234, 0.1) !important;
+  }
+
+  .cl-userPreviewMainIdentifier,
+  .cl-userPreviewTextContainer,
+  .cl-userButtonPopoverActionButton,
+  .cl-userButtonPopoverActionButtonText {
+    color: #f4f2ea !important;
+  }
+
+  .cl-userPreviewSecondaryIdentifier,
+  .cl-userButtonPopoverActionButtonIcon {
+    color: #b5b2a8 !important;
+  }
+
+  .cl-userButtonPopoverActionButton:hover {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .cl-userButtonPopoverFooter {
+    display: none !important;
+  }
+
+  .cl-modalContent,
+  .cl-profilePage,
+  .cl-pageScrollBox {
+    background-color: #242420 !important;
+    color: #f4f2ea !important;
+  }
+
+  .cl-navbar,
+  .cl-navbarButtons {
+    background-color: #1a1a17 !important;
+  }
+
+  .cl-navbarButton,
+  .cl-headerTitle,
+  .cl-profileSectionTitle,
+  .cl-profileSectionContent,
+  .cl-accordionTriggerButton {
+    color: #f4f2ea !important;
+  }
+
+  .cl-headerSubtitle,
+  .cl-navbarButtonIcon {
+    color: #b5b2a8 !important;
+  }
 }

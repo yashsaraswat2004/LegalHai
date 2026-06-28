@@ -1,36 +1,17 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { ClerkProvider } from "@clerk/tanstack-react-start";
+import { clerkProviderAppearance } from "@/lib/clerk-appearance";
+import { NotFoundPage, ErrorPage } from "@/components/errors/ErrorPages";
 
 import appCss from "../styles.css?url";
-
-function NotFoundComponent() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LegalHai — India's First WhatsApp-Native Legal Platform" },
-      { name: "description", content: "Create legally binding rental agreements, NDAs, and contracts on WhatsApp in 2 minutes. Available in 12+ Indian languages with Aadhaar e-sign and e-stamping. Fast, affordable, and lawyer-verified." },
+      { title: "LegalHai — Legal Understanding Platform" },
+      { name: "description", content: "Understand every agreement before you sign. LegalHai explains contracts in your language, highlights risky clauses, and gives real-life examples — confidence before signing." },
       { name: "keywords", content: "legal contracts India, rental agreement WhatsApp, e-stamp India, Aadhaar e-sign, online legal documents, freelance contract India, NDA India, legal tech Bharat" },
       { name: "author", content: "LegalHai" },
       // Geo-SEO for India
@@ -53,8 +34,10 @@ export const Route = createRootRoute({
       { name: "twitter:image", content: "https://legalhai.in/logo.png" },
     ],
     links: [
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon.png" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon.png" },
+      { rel: "shortcut icon", href: "/favicon.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -64,12 +47,20 @@ export const Route = createRootRoute({
   }),
   shellComponent: RootShell,
   component: RootComponent,
-  notFoundComponent: NotFoundComponent,
+  notFoundComponent: NotFoundPage,
+  errorComponent: ({ error, reset }) => (
+    <ErrorPage
+      error={error}
+      onRetry={() => {
+        reset();
+      }}
+    />
+  ),
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: "dark" }}>
       <head>
         <HeadContent />
         <script
@@ -81,7 +72,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
               "name": "LegalHai",
               "operatingSystem": "All",
               "applicationCategory": "BusinessApplication",
-              "description": "India's first WhatsApp-native legal agreement platform. Create, sign, and store legal contracts on WhatsApp in 2 minutes.",
+              "description": "The world's most trusted legal understanding platform. Understand, create, and manage agreements in your own language with confidence.",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
@@ -101,7 +92,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body>
-        {children}
+        <ClerkProvider appearance={clerkProviderAppearance}>
+          {children}
+        </ClerkProvider>
         <Scripts />
       </body>
     </html>
