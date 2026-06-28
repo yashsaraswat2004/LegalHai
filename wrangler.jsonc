@@ -4,6 +4,38 @@
   "compatibility_date": "2026-06-28",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
+  // Keep dashboard secrets/vars across deploys (wrangler deploy was wiping them)
+  "keep_vars": true,
+  "routes": [
+    {
+      "pattern": "legalhai.in",
+      "custom_domain": true
+    },
+    {
+      "pattern": "legalhai.in/*",
+      "zone_name": "legalhai.in"
+    }
+  ],
+  // Public keys only — safe for git; available at build + runtime
+  "vars": {
+    "VITE_SUPABASE_URL": "https://drgedtppakrlzjfgdjyv.supabase.co",
+    "VITE_SUPABASE_ANON_KEY": "sb_publishable_G2oMudytX_kfOwavUpnAsQ__sXDXyjv",
+    "CLERK_PUBLISHABLE_KEY": "pk_test_Z2xvcmlvdXMtd2FydGhvZy01Mi5jbGVyay5hY2NvdW50cy5kZXYk",
+    "VITE_CLERK_PUBLISHABLE_KEY": "pk_test_Z2xvcmlvdXMtd2FydGhvZy01Mi5jbGVyay5hY2NvdW50cy5kZXYk",
+    "CLERK_SIGN_IN_URL": "/sign-in",
+    "CLERK_SIGN_UP_URL": "/sign-up",
+    "CLERK_SIGN_IN_FALLBACK_REDIRECT_URL": "/dashboard",
+    "CLERK_SIGN_UP_FALLBACK_REDIRECT_URL": "/dashboard"
+  },
+  // Set these as encrypted Secrets in Cloudflare dashboard (not plaintext vars)
+  "secrets": {
+    "required": [
+      "CLERK_SECRET_KEY",
+      "SUPABASE_SECRET_KEY",
+      "GEMINI_API_KEY",
+      "GROQ_API_KEY"
+    ]
+  },
   "observability": {
     "enabled": true
   }
