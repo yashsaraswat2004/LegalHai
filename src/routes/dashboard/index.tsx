@@ -4,6 +4,8 @@ import { FileText, Plus, Trash2 } from "lucide-react";
 import { useUser } from "@clerk/tanstack-react-start";
 import { requireAuth } from "@/lib/auth.functions";
 import { listDocumentAnalyses, deleteDocumentAnalysis } from "@/lib/documents/documents.functions";
+import { getBillingStatus } from "@/lib/billing/billing.functions";
+import { LAUNCH_PROMO_CODE } from "@/lib/billing/constants";
 import { AppNav } from "@/components/app/AppNav";
 import { AuthGuard } from "@/components/auth/AuthGuard";
 import { RECOMMENDATION_CONFIG, RISK_CONFIG } from "@/lib/summarizer/constants";
@@ -14,7 +16,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardPage,
   beforeLoad: async () => requireAuth({ data: { redirectPath: "/dashboard" } }),
-  loader: async () => listDocumentAnalyses(),
+  loader: async () => {
+    const [analyses, billing] = await Promise.all([
+      listDocumentAnalyses(),
+      getBillingStatus().catch(() => null),
+    ]);
+    return { ...analyses, billing };
+  },
   head: () => ({
     meta: [{ title: `My documents — ${BRAND.name}` }],
   }),
@@ -37,6 +45,7 @@ function DashboardPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const firstName = user?.firstName ?? "there";
+  const billing = initial.billing;
 
   const handleDelete = async (id: string, fileName: string) => {
     if (!confirm(`Remove "${fileName}" from your documents?`)) return;
@@ -77,6 +86,34 @@ function DashboardPage() {
                 Analyze new document
               </Link>
             </header>
+
+            {billing && (
+              <div
+                className={cn(
+                  "rounded-2xl border px-5 py-4 flex flex-wrap items-center justify-between gap-3 text-sm",
+                  billing.canAnalyze
+                    ? "border-white/10 bg-card/40"
+                    : "border-signal/30 bg-signal/5",
+                )}
+              >
+                <div>
+                  <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                    {billing.planLabel}
+                  </span>
+                  <p className="mt-1 text-muted-foreground">
+                    {billing.analysesLimit === null
+                      ? `${billing.analysesUsed} analyses used · unlimited`
+                      : `${billing.analysesRemaining ?? 0} of ${billing.analysesLimit} free analyses left`}
+                  </p>
+                </div>
+                <Link
+                  to="/billing"
+                  className="text-signal hover:underline font-medium text-xs font-mono uppercase tracking-wider"
+                >
+                  {billing.canAnalyze ? "Manage plan" : `Upgrade · ${LAUNCH_PROMO_CODE}`}
+                </Link>
+              </div>
+            )}
 
             {items.length === 0 ? (
               <div className="rounded-3xl border border-dashed border-white/15 bg-card/50 px-8 py-16 text-center space-y-6">

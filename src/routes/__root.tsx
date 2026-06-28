@@ -2,6 +2,7 @@ import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-r
 import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { clerkProviderAppearance } from "@/lib/clerk-appearance";
 import { NotFoundPage, ErrorPage } from "@/components/errors/ErrorPages";
+import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
 
@@ -94,6 +95,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         <ClerkProvider appearance={clerkProviderAppearance}>
           {children}
+          <Toaster theme="dark" richColors closeButton />
         </ClerkProvider>
         <Scripts />
       </body>

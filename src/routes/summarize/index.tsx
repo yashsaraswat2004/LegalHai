@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { requireAuth } from "@/lib/auth.functions";
+import { BILLING_ERRORS, LAUNCH_PROMO_CODE } from "@/lib/billing/constants";
 import { AppNav } from "@/components/app/AppNav";
 import { UploadPanel } from "@/components/summarizer/UploadPanel";
 import { AnalyzingState } from "@/components/summarizer/AnalyzingState";
@@ -33,11 +34,13 @@ function SummarizePage() {
   const [summary, setSummary] = useState<AgreementSummary | null>(null);
   const [isDemo, setIsDemo] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [billingBlocked, setBillingBlocked] = useState(false);
 
   const handleAnalyze = async (file: File, language: string) => {
     setFileName(file.name);
     setPhase("analyzing");
     setError(null);
+    setBillingBlocked(false);
 
     try {
       const { extractDocumentContent } = await import("@/lib/summarizer/extract-text");
@@ -58,11 +61,19 @@ function SummarizePage() {
       setPhase("report");
     } catch (err) {
       const raw = err instanceof Error ? err.message : "";
-      const message =
-        raw.includes("invalid_enum") || raw.includes("Expected")
-          ? "We couldn't analyze this file. LegalHai works best with agreements you sign — try a rent contract, offer letter, or NDA."
-          : raw || "Something went wrong. Please try again.";
-      setError(message);
+      if (raw === BILLING_ERRORS.LIMIT_REACHED) {
+        setBillingBlocked(true);
+        setError(
+          `You've used your free analyses. Upgrade to Pro (₹49/mo) or redeem ${LAUNCH_PROMO_CODE} for 100% off.`,
+        );
+      } else {
+        setBillingBlocked(false);
+        const message =
+          raw.includes("invalid_enum") || raw.includes("Expected")
+            ? "We couldn't analyze this file. LegalHai works best with agreements you sign — try a rent contract, offer letter, or NDA."
+            : raw || "Something went wrong. Please try again.";
+        setError(message);
+      }
       setPhase("error");
     }
   };
@@ -119,6 +130,14 @@ function SummarizePage() {
               >
                 Try again
               </button>
+              {billingBlocked && (
+                <Link
+                  to="/billing"
+                  className="block text-sm text-signal hover:underline font-mono uppercase tracking-wider"
+                >
+                  Upgrade or apply {LAUNCH_PROMO_CODE} →
+                </Link>
+              )}
             </div>
           )}
 

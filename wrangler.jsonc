@@ -25,7 +25,9 @@
     "CLERK_SIGN_IN_URL": "/sign-in",
     "CLERK_SIGN_UP_URL": "/sign-up",
     "CLERK_SIGN_IN_FALLBACK_REDIRECT_URL": "/dashboard",
-    "CLERK_SIGN_UP_FALLBACK_REDIRECT_URL": "/dashboard"
+    "CLERK_SIGN_UP_FALLBACK_REDIRECT_URL": "/dashboard",
+    "VITE_RAZORPAY_KEY_ID": "rzp_test_T79UTfDrFiihAV",
+    "APP_URL": "https://legalhai.in"
   },
   // Set these as encrypted Secrets in Cloudflare dashboard (not plaintext vars)
   "secrets": {
@@ -33,7 +35,8 @@
       "CLERK_SECRET_KEY",
       "SUPABASE_SECRET_KEY",
       "GEMINI_API_KEY",
-      "GROQ_API_KEY"
+      "GROQ_API_KEY",
+      "RAZORPAY_KEY_SECRET"
     ]
   },
   "observability": {

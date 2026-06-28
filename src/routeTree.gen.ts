@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as BillingRouteImport } from './routes/billing'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SummarizeIndexRouteImport } from './routes/summarize/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardAnalysisIdRouteImport } from './routes/dashboard/$analysisId'
+import { Route as ApiRazorpayWebhookRouteImport } from './routes/api/razorpay/webhook'
 
 const SignUpRoute = SignUpRouteImport.update({
   id: '/sign-up',
@@ -24,6 +27,16 @@ const SignUpRoute = SignUpRouteImport.update({
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BillingRoute = BillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -46,66 +59,92 @@ const DashboardAnalysisIdRoute = DashboardAnalysisIdRouteImport.update({
   path: '/dashboard/$analysisId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiRazorpayWebhookRoute = ApiRazorpayWebhookRouteImport.update({
+  id: '/api/razorpay/webhook',
+  path: '/api/razorpay/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/billing': typeof BillingRoute
+  '/pricing': typeof PricingRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/dashboard/$analysisId': typeof DashboardAnalysisIdRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/summarize/': typeof SummarizeIndexRoute
+  '/api/razorpay/webhook': typeof ApiRazorpayWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/billing': typeof BillingRoute
+  '/pricing': typeof PricingRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/dashboard/$analysisId': typeof DashboardAnalysisIdRoute
   '/dashboard': typeof DashboardIndexRoute
   '/summarize': typeof SummarizeIndexRoute
+  '/api/razorpay/webhook': typeof ApiRazorpayWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/billing': typeof BillingRoute
+  '/pricing': typeof PricingRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/dashboard/$analysisId': typeof DashboardAnalysisIdRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/summarize/': typeof SummarizeIndexRoute
+  '/api/razorpay/webhook': typeof ApiRazorpayWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/billing'
+    | '/pricing'
     | '/sign-in'
     | '/sign-up'
     | '/dashboard/$analysisId'
     | '/dashboard/'
     | '/summarize/'
+    | '/api/razorpay/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/billing'
+    | '/pricing'
     | '/sign-in'
     | '/sign-up'
     | '/dashboard/$analysisId'
     | '/dashboard'
     | '/summarize'
+    | '/api/razorpay/webhook'
   id:
     | '__root__'
     | '/'
+    | '/billing'
+    | '/pricing'
     | '/sign-in'
     | '/sign-up'
     | '/dashboard/$analysisId'
     | '/dashboard/'
     | '/summarize/'
+    | '/api/razorpay/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BillingRoute: typeof BillingRoute
+  PricingRoute: typeof PricingRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
   DashboardAnalysisIdRoute: typeof DashboardAnalysisIdRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   SummarizeIndexRoute: typeof SummarizeIndexRoute
+  ApiRazorpayWebhookRoute: typeof ApiRazorpayWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +161,20 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/billing': {
+      id: '/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof BillingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -152,16 +205,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAnalysisIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/razorpay/webhook': {
+      id: '/api/razorpay/webhook'
+      path: '/api/razorpay/webhook'
+      fullPath: '/api/razorpay/webhook'
+      preLoaderRoute: typeof ApiRazorpayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BillingRoute: BillingRoute,
+  PricingRoute: PricingRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   DashboardAnalysisIdRoute: DashboardAnalysisIdRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   SummarizeIndexRoute: SummarizeIndexRoute,
+  ApiRazorpayWebhookRoute: ApiRazorpayWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

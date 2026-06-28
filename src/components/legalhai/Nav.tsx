@@ -18,6 +18,9 @@ export function Nav() {
           <a href="#how" className="hover:text-foreground transition">
             How it works
           </a>
+          <Link to="/pricing" className="hover:text-foreground transition">
+            Pricing
+          </Link>
           <a href="#documents" className="hover:text-foreground transition">
             What we explain
           </a>

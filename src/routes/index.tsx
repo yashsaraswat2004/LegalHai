@@ -15,6 +15,7 @@ import {
   VisionSection,
   WhySection,
 } from "@/components/home/HomeSections";
+import { PricingSection } from "@/components/billing/PricingCards";
 import { BRAND } from "@/lib/brand";
 import { ensureGuestOnly } from "@/lib/auth.functions";
 
@@ -46,6 +47,7 @@ function Index() {
       <DocumentsSection />
       <MoreThanTranslationSection />
       <TrustSection />
+      <PricingSection />
       <BeforeYouSignSection />
       <ComingSoonSection />
       <VisionSection />

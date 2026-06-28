@@ -21,4 +21,6 @@ alter table public.document_analyses disable row level security;
 
 grant all on public.document_analyses to anon, authenticated, service_role;
 
+-- Billing: also run supabase/migrations/002_user_entitlements.sql
+
 notify pgrst, 'reload schema';

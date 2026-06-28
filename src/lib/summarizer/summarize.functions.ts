@@ -3,6 +3,8 @@ import { analyzeAgreement } from "./ai.server";
 import { summarizeInputSchema } from "./types";
 import { requireAuth } from "@/lib/auth.functions";
 import { insertDocumentAnalysis } from "@/lib/documents/store";
+import { assertCanAnalyze, recordAnalysisUsage, BillingLimitError } from "@/lib/billing/entitlements";
+import { BILLING_ERRORS } from "@/lib/billing/constants";
 
 export const summarizeAgreement = createServerFn({ method: "POST" })
   .inputValidator(summarizeInputSchema)
@@ -12,6 +14,15 @@ export const summarizeAgreement = createServerFn({ method: "POST" })
     }
 
     const { userId } = await requireAuth({ data: { redirectPath: "/summarize" } });
+
+    try {
+      await assertCanAnalyze(userId);
+    } catch (err) {
+      if (err instanceof BillingLimitError) {
+        throw new Error(BILLING_ERRORS.LIMIT_REACHED);
+      }
+      throw err;
+    }
 
     const result = await analyzeAgreement({
       text: data.text,
@@ -29,6 +40,10 @@ export const summarizeAgreement = createServerFn({ method: "POST" })
       summary: result.summary,
       isDemo: result.isDemo,
     });
+
+    if (!result.isDemo) {
+      await recordAnalysisUsage(userId);
+    }
 
     return {
       ...result,

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { UserButton } from "@clerk/tanstack-react-start";
-import { FileSearch, LayoutDashboard } from "lucide-react";
+import { CreditCard, FileSearch, LayoutDashboard } from "lucide-react";
 import { clerkUserButtonAppearance } from "@/lib/clerk-appearance";
 import { BRAND } from "@/lib/brand";
 import { cn } from "@/lib/utils";
@@ -48,6 +48,13 @@ export function AppNav({ active }: AppNavProps) {
             <FileSearch className="h-4 w-4" />
             <span className="hidden sm:inline">Analyze new</span>
             <span className="sm:hidden">New</span>
+          </Link>
+          <Link
+            to="/billing"
+            className="hidden md:inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition"
+          >
+            <CreditCard className="h-4 w-4" />
+            Billing
           </Link>
         </nav>
 
