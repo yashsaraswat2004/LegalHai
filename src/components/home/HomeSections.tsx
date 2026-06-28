@@ -1,14 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import {
   ArrowDown,
+  Archive,
   Briefcase,
   Building2,
+  FilePlus2,
   FileText,
   Handshake,
+  Headphones,
   Home,
   Languages,
+  MessageSquare,
+  PenLine,
   ScrollText,
   Shield,
+  Smartphone,
 } from "lucide-react";
 import { IconBadge } from "@/components/home/IconBadge";
 import { Reveal } from "@/components/legalhai/Reveal";
@@ -365,13 +371,38 @@ export function TrustSection() {
 }
 
 const FUTURE_FEATURES = [
-  { emoji: "🏗", title: "Agreement Builder", desc: "Generate legally structured agreements in minutes." },
-  { emoji: "🎤", title: "Audio Explanation", desc: "Listen instead of reading." },
-  { emoji: "✍", title: "Digital Signature", desc: "Sign directly inside LegalHai." },
-  { emoji: "🧠", title: "AI Legal Assistant", desc: "Ask follow-up questions." },
-  { emoji: "📚", title: "Smart Legal Vault", desc: "Store all agreements securely." },
-  { emoji: "📱", title: "Mobile App", desc: "Analyze agreements on the go — coming soon.", muted: true },
-];
+  {
+    icon: FilePlus2,
+    title: "Agreement Builder",
+    desc: "Generate legally structured agreements in minutes.",
+  },
+  {
+    icon: Headphones,
+    title: "Audio Explanation",
+    desc: "Listen instead of reading.",
+  },
+  {
+    icon: PenLine,
+    title: "Digital Signature",
+    desc: "Sign directly inside LegalHai.",
+  },
+  {
+    icon: MessageSquare,
+    title: "AI Legal Assistant",
+    desc: "Ask follow-up questions.",
+  },
+  {
+    icon: Archive,
+    title: "Smart Legal Vault",
+    desc: "Store all agreements securely.",
+  },
+  {
+    icon: Smartphone,
+    title: "Mobile App",
+    desc: "Analyze agreements on the go — coming soon.",
+    muted: true,
+  },
+] as const;
 
 export function ComingSoonSection() {
   return (
@@ -396,7 +427,12 @@ export function ComingSoonSection() {
                     : "border-white/8 bg-card hover:border-white/15 transition",
                 )}
               >
-                <span className="text-2xl">{f.emoji}</span>
+                <IconBadge
+                  icon={f.icon}
+                  size="sm"
+                  variant={f.muted ? "muted" : "default"}
+                  className="mb-1"
+                />
                 <h3 className="font-display text-lg">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </div>
