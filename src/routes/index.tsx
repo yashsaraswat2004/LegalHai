@@ -16,28 +16,30 @@ import {
   WhySection,
 } from "@/components/home/HomeSections";
 import { PricingSection } from "@/components/billing/PricingCards";
-import { BRAND } from "@/lib/brand";
 import { ensureGuestOnly } from "@/lib/auth.functions";
+import { SEO, buildPageMeta, faqJsonLd, jsonLdScript } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => ensureGuestOnly(),
   component: Index,
-  head: () => ({
-    meta: [
-      { title: `${BRAND.name} — ${BRAND.tagline}` },
-      {
-        name: "description",
-        content:
-          "Understand every agreement before you sign. LegalHai explains contracts in your language with real-life examples and confidence before signing.",
-      },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: SEO.defaultTitle,
+      description: SEO.defaultDescription,
+      path: "/",
+      fullTitle: true,
+    }),
 });
 
 function Index() {
   const [waitlistOpen, setWaitlistOpen] = useState(false);
 
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(faqJsonLd()) }}
+      />
     <div id="top" className="relative min-h-screen bg-background text-foreground grain">
       <Nav />
 
@@ -56,5 +58,6 @@ function Index() {
 
       <WaitlistDialog open={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
     </div>
+    </>
   );
 }

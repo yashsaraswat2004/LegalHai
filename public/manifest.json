@@ -1,7 +1,7 @@
 {
   "name": "LegalHai — Legal Understanding Platform",
   "short_name": "LegalHai",
-  "description": "Understand every agreement before you sign. Confidence before signing.",
+  "description": "AI contract analyzer for India. Understand rental agreements, NDAs, and job contracts before you sign — in your language.",
   "icons": [
     {
       "src": "/favicon.png",

@@ -6,22 +6,19 @@ import { PricingCards } from "@/components/billing/PricingCards";
 import { Nav } from "@/components/legalhai/Nav";
 import { AppNav } from "@/components/app/AppNav";
 import { HomeFooter } from "@/components/home/HomeSections";
-import { BRAND } from "@/lib/brand";
+import { buildPageMeta } from "@/lib/seo";
 import { getBillingStatus, redeemPromoCode } from "@/lib/billing/billing.functions";
 import { BILLING_ERRORS, LAUNCH_PROMO_CODE } from "@/lib/billing/constants";
 import { useRazorpayCheckout } from "@/lib/billing/useRazorpayCheckout";
 
 export const Route = createFileRoute("/pricing")({
   component: PricingPage,
-  head: () => ({
-    meta: [
-      { title: `Pricing — ${BRAND.name}` },
-      {
-        name: "description",
-        content: `Start with 2 free analyses. Pro from ₹49/month. Use ${LAUNCH_PROMO_CODE} for 100% off at launch.`,
-      },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: "Pricing — AI Contract Analysis from ₹49/month",
+      description: `Start with 2 free document analyses. Pro plan ₹49/month for unlimited contract reviews. Per-document ₹19. Use promo ${LAUNCH_PROMO_CODE} for 100% off at launch.`,
+      path: "/pricing",
+    }),
 });
 
 function PricingPage() {

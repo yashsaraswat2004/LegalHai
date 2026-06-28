@@ -12,20 +12,19 @@ import { summarizeAgreement } from "@/lib/summarizer/summarize.functions";
 import type { AgreementSummary } from "@/lib/summarizer/types";
 import { isSignableAgreement } from "@/lib/summarizer/types";
 import { BRAND, LABELS } from "@/lib/brand";
+import { buildPageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/summarize/")({
   component: SummarizePage,
   beforeLoad: async () => requireAuth({ data: { redirectPath: "/summarize" } }),
-  head: () => ({
-    meta: [
-      { title: `${BRAND.beforeYouSign} — ${BRAND.name}` },
-      {
-        name: "description",
-        content:
-          "Upload any agreement and get a plain-language summary with risk highlights, clause explanations, and real-world examples. Available in 12+ Indian languages.",
-      },
-    ],
-  }),
+  head: () =>
+    buildPageMeta({
+      title: "Analyze a contract",
+      description:
+        "Upload any agreement and get a plain-language summary with risk highlights, clause explanations, and real-world examples. Available in 12+ Indian languages.",
+      path: "/summarize",
+      noIndex: true,
+    }),
 });
 
 function SummarizePage() {

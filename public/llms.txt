@@ -1,0 +1,22 @@
+# LegalHai
+
+> Legal understanding platform for India — explain any contract before you sign.
+
+LegalHai (https://legalhai.in) helps people understand rental agreements, employment contracts, NDAs, and legal documents using AI. Users upload a PDF and receive plain-language summaries, risky clause highlights, and explanations in Hindi, Tamil, Bengali, and 12+ Indian languages.
+
+## Product
+
+- Free trial: 2 document analyses
+- Pro: ₹49/month unlimited analyses
+- Launch promo: LAUNCH100 (100% off)
+- Not a law firm — for understanding agreements, not legal advice
+
+## Key pages
+
+- Home: https://legalhai.in/
+- Pricing: https://legalhai.in/pricing
+- Sign up: https://legalhai.in/sign-up
+
+## Contact
+
+https://legalhai.in

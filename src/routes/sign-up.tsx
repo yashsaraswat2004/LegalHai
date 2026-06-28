@@ -6,7 +6,7 @@ import { ClerkAuthLayout } from "@/components/auth/ClerkAuthLayout";
 
 import { clerkAppearance, clerkLocalization } from "@/lib/clerk-appearance";
 
-import { BRAND } from "@/lib/brand";
+import { buildPageMeta } from "@/lib/seo";
 
 import { APP_HOME } from "@/lib/routes";
 
@@ -30,11 +30,13 @@ export const Route = createFileRoute("/sign-up")({
 
   component: SignUpPage,
 
-  head: () => ({
-
-    meta: [{ title: `Sign up — ${BRAND.name}` }],
-
-  }),
+  head: () =>
+    buildPageMeta({
+      title: "Sign up free — 2 contract analyses included",
+      description:
+        "Create a free LegalHai account. Upload any agreement and get plain-language summaries, risk highlights, and explanations in 12+ Indian languages.",
+      path: "/sign-up",
+    }),
 
 });
 

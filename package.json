@@ -9,6 +9,7 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy --keep-vars",
+    "cf:deploy": "wrangler deploy --keep-vars",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

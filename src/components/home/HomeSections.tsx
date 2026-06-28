@@ -361,7 +361,7 @@ const FUTURE_FEATURES = [
   { emoji: "✍", title: "Digital Signature", desc: "Sign directly inside LegalHai." },
   { emoji: "🧠", title: "AI Legal Assistant", desc: "Ask follow-up questions." },
   { emoji: "📚", title: "Smart Legal Vault", desc: "Store all agreements securely." },
-  { emoji: "💬", title: "WhatsApp Agreements", desc: "Create contracts on WhatsApp — coming later.", muted: true },
+  { emoji: "📱", title: "Mobile App", desc: "Analyze agreements on the go — coming soon.", muted: true },
 ];
 
 export function ComingSoonSection() {

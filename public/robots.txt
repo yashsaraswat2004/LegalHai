@@ -12,3 +12,6 @@ User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://legalhai.in/sitemap.xml
+
+# AI / LLM crawlers — product summary
+# https://legalhai.in/llms.txt

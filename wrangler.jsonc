@@ -4,7 +4,9 @@
   "compatibility_date": "2026-06-28",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
-  // Keep dashboard secrets/vars across deploys (wrangler deploy was wiping them)
+  "workers_dev": false,
+  "preview_urls": false,
+  // Keep dashboard-only vars across deploys (does not apply to encrypted Secrets)
   "keep_vars": true,
   "routes": [
     {
@@ -29,7 +31,9 @@
     "VITE_RAZORPAY_KEY_ID": "rzp_test_T79UTfDrFiihAV",
     "APP_URL": "https://legalhai.in"
   },
-  // Set these as encrypted Secrets in Cloudflare dashboard (not plaintext vars)
+  // Set these as encrypted Secrets in Cloudflare dashboard (Workers > legalhai > Settings).
+  // NEVER put them in plaintext "vars" — deploy will remove vars not listed below.
+  // Required: CLERK_SECRET_KEY, SUPABASE_SECRET_KEY, GEMINI_API_KEY, GROQ_API_KEY, RAZORPAY_KEY_SECRET
   "secrets": {
     "required": [
       "CLERK_SECRET_KEY",
