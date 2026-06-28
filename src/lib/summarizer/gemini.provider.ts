@@ -62,60 +62,91 @@ async function requestGemini(
   parts: UserContentPart[],
   maxOutputTokens: number,
 ): Promise<string> {
-  const response = await fetch(geminiGenerateUrl(model), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": apiKey,
+  const payload = JSON.stringify({
+    systemInstruction: { parts: [{ text: systemPrompt }] },
+    contents: [{ role: "user", parts: toGeminiParts(parts) }],
+    generationConfig: {
+      temperature: 0.35,
+      maxOutputTokens,
+      responseMimeType: "application/json",
     },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: systemPrompt }] },
-      contents: [{ role: "user", parts: toGeminiParts(parts) }],
-      generationConfig: {
-        temperature: 0.35,
-        maxOutputTokens,
-        responseMimeType: "application/json",
-      },
-    }),
   });
 
-  const body = await response.text();
+  const url = geminiGenerateUrl(model);
+  const authModes: Array<{ label: string; url: string; headers: Record<string, string> }> = [
+    {
+      label: "header",
+      url,
+      headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+    },
+    {
+      label: "query",
+      url: `${url}?key=${encodeURIComponent(apiKey)}`,
+      headers: { "Content-Type": "application/json" },
+    },
+  ];
 
-  if (!response.ok) {
-    throw new ProviderError(formatProviderError(response.status, body), {
+  let lastError: ProviderError | null = null;
+
+  for (const mode of authModes) {
+    const response = await fetch(mode.url, {
+      method: "POST",
+      headers: mode.headers,
+      body: payload,
+    });
+
+    const body = await response.text();
+
+    if (response.ok) {
+      let json: {
+        candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+      };
+
+      try {
+        json = JSON.parse(body);
+      } catch {
+        throw new ProviderError("Invalid response from Gemini.", {
+          status: 502,
+          body,
+          retryable: true,
+          provider: "gemini",
+        });
+      }
+
+      const text = json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
+      if (!text.trim()) {
+        throw new ProviderError("Empty response from Gemini.", {
+          status: 502,
+          body,
+          retryable: true,
+          provider: "gemini",
+        });
+      }
+
+      return text;
+    }
+
+    const error = new ProviderError(formatProviderError(response.status, body), {
       status: response.status,
       body,
       retryable: isGeminiRetryable(response.status, body),
       provider: "gemini",
     });
+
+    if (response.status === 401 || response.status === 403) {
+      lastError = error;
+      continue;
+    }
+
+    throw error;
   }
 
-  let json: {
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
-  };
-
-  try {
-    json = JSON.parse(body);
-  } catch {
-    throw new ProviderError("Invalid response from Gemini.", {
-      status: 502,
-      body,
-      retryable: true,
-      provider: "gemini",
-    });
-  }
-
-  const text = json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-  if (!text.trim()) {
-    throw new ProviderError("Empty response from Gemini.", {
-      status: 502,
-      body,
-      retryable: true,
-      provider: "gemini",
-    });
-  }
-
-  return text;
+  throw lastError ?? new ProviderError(formatProviderError(401, ""), {
+    status: 401,
+    body: "",
+    retryable: false,
+    provider: "gemini",
+  });
 }
 
 export async function analyzeWithGemini(params: AnalyzeParams): Promise<AgreementSummary> {

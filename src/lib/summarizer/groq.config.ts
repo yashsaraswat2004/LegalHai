@@ -9,6 +9,8 @@ export const GROQ_TEXT_MODEL_FAST = "llama-3.1-8b-instant";
 /** Image / scan OCR */
 export const GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 
+import { readServerEnv } from "@/lib/server-env";
+
 export function getGroqApiKey(): string | undefined {
-  return process.env.GROQ_API_KEY?.trim() || undefined;
+  return readServerEnv("GROQ_API_KEY");
 }
