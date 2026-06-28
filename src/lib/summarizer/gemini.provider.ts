@@ -12,7 +12,7 @@ import { GEMINI_DOCUMENT_CHAR_LIMITS, formatProviderError } from "./truncate-tex
 import { getLanguagePromptName } from "./languages";
 import { buildAnalysisUserContent, finalizeSummaryMeta } from "./build-content";
 import type { AnalyzeParams } from "./analyze-types";
-import { ProviderError, isGeminiRetryable } from "./provider-errors";
+import { ProviderError, isGeminiRetryable, shouldStopProviderRetries } from "./provider-errors";
 import type { UserContentPart } from "./build-content";
 
 interface GeminiAttempt {
@@ -187,6 +187,7 @@ export async function analyzeWithGemini(params: AnalyzeParams): Promise<Agreemen
       return finalizeSummaryMeta(parsed, params, prepared);
     } catch (err) {
       if (err instanceof ProviderError) {
+        if (shouldStopProviderRetries(err)) throw err;
         if (err.retryable) {
           lastError = err;
           continue;

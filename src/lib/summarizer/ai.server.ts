@@ -19,15 +19,15 @@ export async function analyzeAgreement(params: AnalyzeParams): Promise<{
     return { summary: getDemoSummary(params.language, params.fileName), isDemo: true };
   }
 
-  // Groq keys (gsk_) are more reliable in production than newer Gemini AQ auth keys.
-  if (hasGroq) {
+  // Gemini first — larger context and better quotas for full offer letters / agreements.
+  if (hasGemini) {
     try {
-      const summary = await analyzeWithGroq(params);
+      const summary = await analyzeWithGemini(params);
       return { summary, isDemo: false };
     } catch (err) {
-      if (hasGemini && shouldFallbackToNextProvider(err)) {
+      if (hasGroq && shouldFallbackToNextProvider(err)) {
         console.warn(
-          "[LegalHai] Groq unavailable, falling back to Gemini:",
+          "[LegalHai] Gemini unavailable, falling back to Groq:",
           err instanceof Error ? err.message : err,
         );
       } else {
@@ -36,6 +36,6 @@ export async function analyzeAgreement(params: AnalyzeParams): Promise<{
     }
   }
 
-  const summary = await analyzeWithGemini(params);
+  const summary = await analyzeWithGroq(params);
   return { summary, isDemo: false };
 }

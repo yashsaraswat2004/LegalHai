@@ -64,7 +64,7 @@ export function formatProviderError(status: number, body: string): string {
   }
 
   if (status === 429 || lower.includes("rate limit") || lower.includes("resource_exhausted")) {
-    return "We're getting a lot of requests right now. Please wait a moment and try again.";
+    return "Our AI is busy right now — we automatically tried a backup provider. Please wait 30 seconds and try again.";
   }
 
   if (status === 401 || status === 403) {

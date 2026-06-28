@@ -57,5 +57,16 @@ export function shouldFallbackToNextProvider(err: unknown): boolean {
   if (!isProviderError(err)) return false;
   // Invalid/expired key on primary provider — try backup before failing
   if (err.status === 401 || err.status === 403) return true;
+  // Rate limited — switch provider instead of retrying the same one
+  if (err.status === 429) return true;
+  const lower = err.body.toLowerCase();
+  if (lower.includes("rate limit") || lower.includes("resource_exhausted")) return true;
   return err.retryable;
+}
+
+/** Stop burning retries on the same provider when another may work. */
+export function shouldStopProviderRetries(err: ProviderError): boolean {
+  if (err.status === 401 || err.status === 403 || err.status === 429) return true;
+  const lower = err.body.toLowerCase();
+  return lower.includes("rate limit") || lower.includes("resource_exhausted");
 }

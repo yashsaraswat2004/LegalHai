@@ -13,7 +13,7 @@ import { GROQ_DOCUMENT_CHAR_LIMITS, formatProviderError } from "./truncate-text"
 import { getLanguagePromptName } from "./languages";
 import { buildAnalysisUserContent, finalizeSummaryMeta } from "./build-content";
 import type { AnalyzeParams } from "./analyze-types";
-import { ProviderError, isGroqRetryable } from "./provider-errors";
+import { ProviderError, isGroqRetryable, shouldStopProviderRetries } from "./provider-errors";
 import type { UserContentPart } from "./build-content";
 
 interface GroqAttempt {
@@ -135,6 +135,7 @@ export async function analyzeWithGroq(params: AnalyzeParams): Promise<AgreementS
       return finalizeSummaryMeta(parsed, params, prepared);
     } catch (err) {
       if (err instanceof ProviderError) {
+        if (shouldStopProviderRetries(err)) throw err;
         if (err.retryable) {
           lastError = err;
           continue;
