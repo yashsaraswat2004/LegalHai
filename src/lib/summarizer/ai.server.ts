@@ -25,7 +25,10 @@ export async function analyzeAgreement(params: AnalyzeParams): Promise<{
       return { summary, isDemo: false };
     } catch (err) {
       if (hasGroq && shouldFallbackToNextProvider(err)) {
-        console.warn("[LegalHai] Gemini unavailable, falling back to Groq:", err instanceof Error ? err.message : err);
+        console.warn(
+          "[LegalHai] Gemini unavailable, falling back to Groq:",
+          err instanceof Error ? err.message : err,
+        );
       } else {
         throw err;
       }

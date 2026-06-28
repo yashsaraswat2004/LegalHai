@@ -10,5 +10,5 @@ export const GROQ_TEXT_MODEL_FAST = "llama-3.1-8b-instant";
 export const GROQ_VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 
 export function getGroqApiKey(): string | undefined {
-  return process.env.GROQ_API_KEY;
+  return process.env.GROQ_API_KEY?.trim() || undefined;
 }

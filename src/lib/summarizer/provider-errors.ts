@@ -55,5 +55,7 @@ export function isGroqRetryable(status: number, body: string): boolean {
 
 export function shouldFallbackToNextProvider(err: unknown): boolean {
   if (!isProviderError(err)) return false;
+  // Invalid/expired key on primary provider — try backup before failing
+  if (err.status === 401 || err.status === 403) return true;
   return err.retryable;
 }

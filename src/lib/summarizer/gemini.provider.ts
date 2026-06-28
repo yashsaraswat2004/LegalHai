@@ -62,9 +62,12 @@ async function requestGemini(
   parts: UserContentPart[],
   maxOutputTokens: number,
 ): Promise<string> {
-  const response = await fetch(geminiGenerateUrl(model, apiKey), {
+  const response = await fetch(geminiGenerateUrl(model), {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": apiKey,
+    },
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: systemPrompt }] },
       contents: [{ role: "user", parts: toGeminiParts(parts) }],
