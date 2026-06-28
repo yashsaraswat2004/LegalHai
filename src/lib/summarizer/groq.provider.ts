@@ -24,17 +24,19 @@ interface GroqAttempt {
 
 function buildGroqAttempts(hasImageOnly: boolean): GroqAttempt[] {
   if (hasImageOnly) {
-    return [{ model: GROQ_VISION_MODEL, maxDocChars: GROQ_DOCUMENT_CHAR_LIMITS[0], maxTokens: 2048 }];
+    return [{ model: GROQ_VISION_MODEL, maxDocChars: GROQ_DOCUMENT_CHAR_LIMITS[2], maxTokens: 2048 }];
   }
 
-  const attempts: GroqAttempt[] = [];
-  for (const maxDocChars of GROQ_DOCUMENT_CHAR_LIMITS) {
-    attempts.push({ model: GROQ_TEXT_MODEL, maxDocChars, maxTokens: 2048 });
-  }
-  for (const maxDocChars of GROQ_DOCUMENT_CHAR_LIMITS) {
-    attempts.push({ model: GROQ_TEXT_MODEL_FAST, maxDocChars, maxTokens: 2048 });
-  }
-  return attempts;
+  // Smallest / fastest first — stays within Groq free-tier TPM on typical offer letters.
+  return [
+    { model: GROQ_TEXT_MODEL_FAST, maxDocChars: GROQ_DOCUMENT_CHAR_LIMITS[2], maxTokens: 2048 },
+    { model: GROQ_TEXT_MODEL_FAST, maxDocChars: GROQ_DOCUMENT_CHAR_LIMITS[1], maxTokens: 2048 },
+    { model: GROQ_TEXT_MODEL, maxDocChars: GROQ_DOCUMENT_CHAR_LIMITS[0], maxTokens: 2048 },
+  ];
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function toGroqUserContent(parts: UserContentPart[]) {
@@ -143,6 +145,23 @@ export async function analyzeWithGroq(params: AnalyzeParams): Promise<AgreementS
         throw err;
       }
       throw err;
+    }
+  }
+
+  // One delayed retry on rate limit before falling back to Gemini.
+  if (lastError?.status === 429) {
+    await sleep(4500);
+    const retry = attempts[0]!;
+    const { parts, prepared } = buildAnalysisUserContent(params, langName, retry.maxDocChars);
+    if (parts.length > 0) {
+      try {
+        const content = await requestGroq(apiKey, retry.model, systemPrompt, parts, retry.maxTokens);
+        const parsed = parseAgreementSummary(parseModelJson(content), params.fileName);
+        return finalizeSummaryMeta(parsed, params, prepared);
+      } catch (err) {
+        if (!(err instanceof ProviderError) || err.status !== 429) throw err;
+        lastError = err;
+      }
     }
   }
 

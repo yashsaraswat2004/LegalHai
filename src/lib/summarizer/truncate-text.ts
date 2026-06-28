@@ -69,7 +69,7 @@ export function formatProviderError(status: number, body: string): string {
 
   if (status === 401 || status === 403) {
     console.error("[LegalHai] AI provider authentication failed", { status });
-    return "Analysis service authentication failed. Please contact support.";
+    return "Analysis could not start — API keys may need updating. Please try again shortly.";
   }
 
   try {

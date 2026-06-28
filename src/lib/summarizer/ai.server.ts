@@ -3,39 +3,54 @@ import { getDemoSummary } from "./demo-summary";
 import type { AnalyzeParams } from "./analyze-types";
 import { analyzeWithGemini, hasGeminiKey } from "./gemini.provider";
 import { analyzeWithGroq, hasGroqKey } from "./groq.provider";
-import { shouldFallbackToNextProvider } from "./provider-errors";
+import { isProviderError, shouldFallbackToNextProvider } from "./provider-errors";
 
 export type { AnalyzeParams } from "./analyze-types";
+
+type Provider = "groq" | "gemini";
+
+function buildProviderChain(): Provider[] {
+  const chain: Provider[] = [];
+  // Groq (gsk_) is reliable in production; Gemini AQ keys often 401 on Workers.
+  if (hasGroqKey()) chain.push("groq");
+  if (hasGeminiKey()) chain.push("gemini");
+  return chain;
+}
 
 export async function analyzeAgreement(params: AnalyzeParams): Promise<{
   summary: AgreementSummary;
   isDemo: boolean;
 }> {
-  const hasGemini = hasGeminiKey();
-  const hasGroq = hasGroqKey();
+  const chain = buildProviderChain();
 
-  if (!hasGemini && !hasGroq) {
+  if (chain.length === 0) {
     await new Promise((r) => setTimeout(r, 1800));
     return { summary: getDemoSummary(params.language, params.fileName), isDemo: true };
   }
 
-  // Gemini first — larger context and better quotas for full offer letters / agreements.
-  if (hasGemini) {
+  let lastError: unknown;
+
+  for (let i = 0; i < chain.length; i++) {
+    const provider = chain[i]!;
+    const hasFallback = i < chain.length - 1;
+
     try {
-      const summary = await analyzeWithGemini(params);
+      const summary =
+        provider === "groq" ? await analyzeWithGroq(params) : await analyzeWithGemini(params);
       return { summary, isDemo: false };
     } catch (err) {
-      if (hasGroq && shouldFallbackToNextProvider(err)) {
+      lastError = err;
+      if (hasFallback && shouldFallbackToNextProvider(err)) {
         console.warn(
-          "[LegalHai] Gemini unavailable, falling back to Groq:",
+          `[LegalHai] ${provider} failed, trying ${chain[i + 1]}:`,
           err instanceof Error ? err.message : err,
+          isProviderError(err) ? { status: err.status, provider: err.provider } : undefined,
         );
-      } else {
-        throw err;
+        continue;
       }
+      throw err;
     }
   }
 
-  const summary = await analyzeWithGroq(params);
-  return { summary, isDemo: false };
+  throw lastError ?? new Error("Analysis failed.");
 }
