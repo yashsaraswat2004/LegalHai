@@ -1,5 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowDown, FileText, Languages, Shield } from "lucide-react";
+import {
+  ArrowDown,
+  Briefcase,
+  Building2,
+  FileText,
+  Handshake,
+  Home,
+  Languages,
+  ScrollText,
+  Shield,
+} from "lucide-react";
+import { IconBadge } from "@/components/home/IconBadge";
 import { Reveal } from "@/components/legalhai/Reveal";
 import { BRAND, LABELS } from "@/lib/brand";
 import { cn } from "@/lib/utils";
@@ -85,9 +96,7 @@ export function HomeHero() {
                 <div className="grid sm:grid-cols-3 gap-6 md:gap-8">
                   {HERO_FEATURES.map(({ icon: Icon, label, desc }) => (
                     <div key={label} className="space-y-3 text-center">
-                      <div className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-xl bg-signal/10 border border-signal/20">
-                        <Icon className="h-4 w-4 text-signal" />
-                      </div>
+                      <IconBadge icon={Icon} className="mx-auto" />
                       <p className="font-display text-lg text-foreground leading-snug">{label}</p>
                       <p className="text-sm text-muted-foreground text-pretty leading-relaxed">{desc}</p>
                     </div>
@@ -233,13 +242,13 @@ export function HowSection() {
 }
 
 const DOC_TYPES = [
-  { label: "Job Offer Letters", emoji: "📄" },
-  { label: "Rent Agreements", emoji: "🏠" },
-  { label: "Bank Documents", emoji: "🏦" },
-  { label: "Government Forms", emoji: "📑" },
-  { label: "Business Agreements", emoji: "🤝" },
-  { label: "Freelance Contracts", emoji: "📜" },
-];
+  { label: "Job Offer Letters", icon: Briefcase },
+  { label: "Rent Agreements", icon: Home },
+  { label: "Bank Documents", icon: Building2 },
+  { label: "Government Forms", icon: ScrollText },
+  { label: "Business Agreements", icon: Handshake },
+  { label: "Freelance Contracts", icon: FileText },
+] as const;
 
 export function DocumentsSection() {
   return (
@@ -257,7 +266,7 @@ export function DocumentsSection() {
           {DOC_TYPES.map((d, i) => (
             <Reveal key={d.label} delay={i * 60}>
               <div className="group rounded-2xl border border-white/8 bg-card p-6 hover:border-signal/25 hover:bg-signal/[0.03] transition-all">
-                <span className="text-3xl mb-4 block">{d.emoji}</span>
+                <IconBadge icon={d.icon} size="sm" className="mb-4" />
                 <h3 className="font-display text-xl group-hover:text-signal transition-colors">
                   {d.label}
                 </h3>
