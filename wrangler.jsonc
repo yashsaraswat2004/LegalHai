@@ -32,17 +32,8 @@
     "APP_URL": "https://legalhai.in"
   },
   // Set these as encrypted Secrets in Cloudflare dashboard (Workers > legalhai > Settings).
-  // NEVER put them in plaintext "vars" — deploy will remove vars not listed below.
-  // Required: CLERK_SECRET_KEY, SUPABASE_SECRET_KEY, GEMINI_API_KEY, GROQ_API_KEY, RAZORPAY_KEY_SECRET
-  "secrets": {
-    "required": [
-      "CLERK_SECRET_KEY",
-      "SUPABASE_SECRET_KEY",
-      "GEMINI_API_KEY",
-      "GROQ_API_KEY",
-      "RAZORPAY_KEY_SECRET"
-    ]
-  },
+  // NEVER put them in plaintext "vars" — deploy will remove vars not listed above.
+  // CLERK_SECRET_KEY, SUPABASE_SECRET_KEY, GEMINI_API_KEY, GROQ_API_KEY, RAZORPAY_KEY_SECRET
   "observability": {
     "enabled": true
   }
